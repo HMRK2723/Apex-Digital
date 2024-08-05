@@ -86,4 +86,30 @@ $(document).ready(function () {
             alert('Please enter a valid email address');
         }
     });
+    function handleIntersection(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }
+
+    const options = {
+        threshold: 0.1
+    };
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+});
+
+$(window).on('load', function () {
+    setTimeout(function () {
+        $('#loader').fadeOut('slow', function () {
+            $('#content').fadeIn('slow');
+        });
+    }, 700);
 });
